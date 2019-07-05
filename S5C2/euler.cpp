@@ -16,8 +16,8 @@ int main()
     y[0]=0;
     for (int i=0; i<n;i++)
     {
-        x[i] = x[i-1] + h;
-        y[i] = y[i-1] + h * funcion(x[i-1],y[i-1]);
+        x[i] = x[i] + h;
+        y[i] = y[i] + h * funcion(x[i],y[i]);
     }   
     
     cout << x;
