@@ -59,6 +59,10 @@ for i in range(N):
         pasosx = np.random.normal(pasosx[i][j], sigma)
         pasosy = np.random.normal(pasosy[i][j], sigma)
         
+        if (pasosx[i][j] >30.5):
+            pasosx[i][j]=0+pasosx[i][j]
+        if (pasosy[i][j]>30.5):
+            pasosy[i][j]=0+pasosy[i][j]
         
         
         
