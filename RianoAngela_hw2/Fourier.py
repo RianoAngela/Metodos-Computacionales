@@ -26,7 +26,7 @@ aumento = foto[:, np.newaxis] * foto[np.newaxis, :]
 aumento_ft = np.fft.fft2(aumento, s=carafeliz.shape[:2], axes=(0, 1))
 cara3_ft = np.fft.fft2(carafeliz)
 cara3_ft = aumento_ft[:,:] * cara3_ft
-cara3 = np.fft.ifft2(img3_ft).real
+cara3 = np.fft.ifft2(cara3_ft).real
 
 plt.imshow(cara3)
 plt.savefig("nuevacara3.png")
@@ -39,7 +39,7 @@ aumento1 = foto1[:, np.newaxis] * foto1[np.newaxis, :]
 aumento1_ft = np.fft.fft2(aumento1, s=caraseria.shape[:2], axes=(0, 1))
 cara2_ft = np.fft.fft2(caraseria)
 cara2_ft = aumento1_ft[:,:] * cara2_ft
-cara2 = np.fft.ifft2(img2_ft).real
+cara2 = np.fft.ifft2(cara2_ft).real
 
 plt.imshow(cara2)
 plt.savefig("nuevacara2.png")
