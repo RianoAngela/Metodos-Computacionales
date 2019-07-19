@@ -6,46 +6,68 @@ from scipy.fftpack import fft, fftfreq
 caraseria=plt.imread("cara_02_grisesMF.png")
 carafeliz=plt.imread("cara_03_grisesMF.png")
 
-print(np.shape(caraseria))
-print(np.shape(carafeliz))
-
-
-plt.imshow(caraseria)
-plt.savefig("cara2Original.png")
-
-plt.imshow(carafeliz)
-plt.savefig("cara3Original.png")
-
-##Para obtener la cara nueva 2 y 3 se baso en el proceso realizado en computo ciencias uniandes
-#proceso para cara3
-t = np.linspace(-6, 6, 10)
-foto = np.exp(-0.00025*t**2)
-foto = foto / np.trapz(foto)
-
-aumento = foto[:, np.newaxis] * foto[np.newaxis, :]
-aumento_ft = np.fft.fft2(aumento, s=carafeliz.shape[:2], axes=(0, 1))
-cara3_ft = np.fft.fft2(carafeliz)
-cara3_ft = aumento_ft[:,:] * cara3_ft
-cara3 = np.fft.ifft2(cara3_ft).real
-
-plt.imshow(cara3)
-plt.savefig("nuevacara3.png")
-
-#proceso para cara2
-foto1 = np.exp(-15*t**2)
-foto1 = foto1 / np.trapz(foto1)
-
-aumento1 = foto1[:, np.newaxis] * foto1[np.newaxis, :]
-aumento1_ft = np.fft.fft2(aumento1, s=caraseria.shape[:2], axes=(0, 1))
+#Transformada de Fourier
 cara2_ft = np.fft.fft2(caraseria)
-cara2_ft = aumento1_ft[:,:] * cara2_ft
-cara2 = np.fft.ifft2(cara2_ft).real
+cara3_ft = np.fft.fft2(carafeliz)
 
-plt.imshow(cara2)
-plt.savefig("nuevacara2.png")
+plt.figure(figsize=(8,8))
+plt.subplot(2,2,1)
+plt.imshow(cara2_ft.real, vmin=0, vmax=2)
+plt.title("FFT cara 2")
+plt.subplot(2,2,2)
+plt.imshow(cara3_ft.real, vmin=0, vmax=2)
+plt.title("FFT cara 3")
 
-#foto hibrida 
-hibrida=cara2+cara3
+plt.savefig("FFtIm.pdf")
 
-plt.imshow(hibrida)
-plt.savefig("hibrida.png")
+#Frecuencia 
+cara2_fr = np.fft.fftshift(cara2_ft)
+cara3_fr = np.fft.fftshift(cara3_ft)
+
+plt.figure(figsize=(8,8))
+plt.subplot(2,2,1)
+plt.imshow(cara2_fr.real, vmin=0,vmax=2)
+plt.title("Frecuencia cara 2")
+plt.subplot(2,2,2)
+plt.imshow(cara3_fr.real,vmin=0, vmax=2)
+plt.title("Frecuencia cara 3")
+
+for i in range(254):
+    for j in range (170):
+        if (abs(cara2_fr[i,j])>=250):
+            cara2_fr[i,j]=0
+        
+for k in range(254):
+    for l in range (170):
+        if (abs(cara3_fr[k,l])<=250):
+            cara3_fr[k,l]=0
+
+#Transformada Inversa 
+img2= np.fft.ifft2(cara2_fr)
+img3= np.fft.ifft2(cara3_fr)
+
+plt.figure(figsize=(6,6))
+plt.subplot(2,2,1)
+plt.imshow(cara2_fr.real, vmin=0, vmax=0.0001)
+plt.title("Frecuencia filtrada cara 2")
+plt.subplot(2,2,2)
+plt.imshow(cara3_fr.real, vmin=0, vmax=0.0001)
+plt.title("Frecuencia filtrada cara 3")
+plt.subplot(2,2,3)
+plt.imshow(img2.real, vmin=0, vmax=0.1)
+plt.title("iFF cara 2")
+plt.subplot(2,2,4)
+plt.imshow(img3.real, vmin=0, vmax=0.999)
+plt.title("iFF cara 3")
+plt.savefig("ImProces.pdf")
+
+
+#Imagen hibrida
+final1=img2+img3
+plt.figure(figsize=(6,5))
+plt.subplot(2,2,1)
+plt.imshow(final1.real, plt.cm.gray,vmin=0,vmax=1)
+plt.title("Fotografia hibrida")
+plt.savefig("ImHybrid.pdf")
+
+
