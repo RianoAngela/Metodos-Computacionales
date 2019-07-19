@@ -45,7 +45,7 @@ plt.subplot(9,3,9)
 plt.title("dt=0.0001 Runge kutta")
 plt.plot(rk3[:,0],rk3[:,1])
 
-plt.savefig("xy_met_dt.png")
+plt.savefig("xy_met_dt.pdf")
 
 #Graficas de vx vs vy 
 fig = plt.figure(figsize=(40, 40))
@@ -78,7 +78,7 @@ plt.subplot(9,3,9)
 plt.title("dt=0.0001 Runge kutta")
 plt.plot(rk3[:,2],rk3[:,3])
 
-plt.savefig("VxVy_met_dt.png")
+plt.savefig("VxVy_met_dt.pdf")
 
 #Graficas del momento angular 
 fig = plt.figure(figsize=(40, 40))
@@ -111,7 +111,7 @@ plt.subplot(9,3,9)
 plt.title("dt=0.0001 Runge kutta")
 plt.plot(rk3[:,5])
 
-plt.savefig("Mome_met_dt.png")
+plt.savefig("Mome_met_dt.pdf")
 
 
 #Graficas de la energia total del sistema
@@ -145,4 +145,4 @@ plt.subplot(9,3,9)
 plt.title("dt=0.0001 Runge kutta")
 plt.plot(rk3[:,4])
 
-plt.savefig("Ener_met_dt.png")
+plt.savefig("Ener_met_dt.pdf")
